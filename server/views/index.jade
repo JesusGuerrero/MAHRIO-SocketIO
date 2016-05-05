@@ -1,0 +1,50 @@
+html(ng-app="mahrio")
+    head
+        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+        link(rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css")
+        link(rel="stylesheet" href="/assets/css/socket.client.css")
+        link(rel="stylesheet" href="/bower_components/angular/angular-csp.css")
+        script(src="/bower_components/angular/angular.js")
+        script(src="/bower_components/angular-route/angular-route.js")
+        script(src="/bower_components/jquery/dist/jquery.js")
+        script(src="/bower_components/bootstrap/dist/js/bootstrap.js")
+    body.ng-cloak
+        .box
+            header.navbar.navbar-inverse.navbar-fixed-top
+                .container(style="position: relative")
+                    .navbar-header
+                        button.navbar-toggle.collapsed( data-toggle="collapse" data-target="#nav-dropdown-menu" type="button" aria-expanded="false")
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        .navbar-brand(href="/" style="margin-left: 0;")
+                            | MAHRIO: CHAT
+                    nav.collapse.navbar-collapse( id="nav-dropdown-menu" ng-controller="NavCtrl as vm")
+                        ul#nav-items.nav.navbar-nav.navbar-right
+                            li( ng-show="vm.connected" data-toggle="collapse" data-target="#nav-dropdown-menu")
+                                a( ng-click="vm.ping()" ) Ping
+                            li.visible-xs(ng-show="vm.connected" data-toggle="collapse" data-target="#nav-dropdown-menu")
+                                a( ng-click="vm.toggleRoom()" )
+                                    b Rooms
+                                    span.badge 4
+                            li.visible-xs(ng-show="vm.connected" data-toggle="collapse" data-target="#nav-dropdown-menu")
+                                a( ng-click="vm.toggleMembers()" )
+                                    b Members
+                                    span.badge 4
+                            li( ng-show="!vm.connected" data-toggle="collapse" data-target="#nav-dropdown-menu")
+                                a( ng-click="vm.connect()" ) Connect
+                            li( ng-show="vm.connected" data-toggle="collapse" data-target="#nav-dropdown-menu")
+                                a( ng-click="vm.disconnect()" ) Leave
+            .header(style="height: 40px; margin-bottom: 22px")
+
+            .box-container(ng-view)
+
+            footer
+                chat-input
+
+
+    script(src="/bower_components/socket.io-client/socket.io.js")
+
+    script(src="/assets/js/socket.client.js")
+

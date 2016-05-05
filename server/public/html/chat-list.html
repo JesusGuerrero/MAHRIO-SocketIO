@@ -1,0 +1,68 @@
+<div ng-show="vm.provisioned" style="position: absolute; height: 100%; width: 100%;">
+
+    <div ng-show="!vm.connected" class="text-center ng-hide">
+        <button ng-click="vm.connect()" class="btn btn-lg btn-success">Connect</button>
+    </div>
+    <div ng-show="vm.connected" class="clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-9 col-xs-12 chat-window">
+                    <ul role="tablist" class="nav nav-tabs hidden-xs" style="margin-top: 10px">
+                        <li role="presentation" class="active">
+                            <a href="#tab0"><b>Main</b></a>
+                        </li>
+                        <li role="presentation" class="visible-xs">
+                            <a id="roomsPill" href="#rooms">
+                                <b>
+                                    Rooms
+                                </b>
+                                <span class="badge">4</span>
+                            </a>
+                        </li>
+                        <li role="presentation" class="visible-xs">
+                            <a id="membersPill" href="#members">
+                                <b>
+                                    Members
+                                </b>
+                                <span class="badge">4</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="chat-wrapper" style=" border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; border-left: 1px solid #ddd; ">
+                        <div role="tabpanel" id="tab0" class="tab-pane active panel-body">
+                            <div ng-repeat="chat in vm.chats track by $index">
+                                {{chat}}
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="rooms" class="tab-pane panel-body noTop">
+                            <b>Rooms...</b>
+                        </div>
+                        <div role="tabpanel" id="members" class="tab-pane panel-body noTop">
+                            <div ng-repeat="member in vm.currentMembers track by $index">
+                                {{member.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 hidden-xs chat-window">
+                    <ul role="tablist" class="nav nav-tabs"  style="margin-top: 10px">
+                        <li role="presentation" class="active">
+                            <a href="#mem0">
+                                <b>
+                                    Members
+                                </b>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style=" border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; border-left: 1px solid #ddd; ">
+                        <div role="tabpanel" id="mem0" class="tab-pane active panel-body">
+                            <div ng-repeat="member in vm.currentMembers track by $index">
+                                {{member.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

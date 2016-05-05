@@ -1,0 +1,10 @@
+<div class="container" ng-show="connected">
+    <form ng-submit="sendMessage()" style="margin: 10px 0;">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Chat..." ng-model="message">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Send</button>
+            </span>
+        </div>
+    </form>
+</div>

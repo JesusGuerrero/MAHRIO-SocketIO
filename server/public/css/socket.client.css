@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+    max-height: 100%;
+}
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+.box .header {
+    flex: 0 1 auto;
+}
+.box .box-container {
+    flex: 1 1 auto;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+.chat-window {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+.chat-window .tab-content {
+    flex: 1 1 auto;
+    height: 100%;
+    overflow: scroll;
+}
+.box footer {
+    flex: 0 1 40px;
+}
+.noTop {
+    border-top: none;
+}
+@media screen and (max-width: 768px) {
+    .container-fluid {
+        padding: 0;
+    }
+}
