@@ -15,7 +15,7 @@
     "hapi": "8.8.1",
     "jade": "1.11.0",
     "node-env-file": "0.1.8",
-    "socket.io": "1.4.5",
+    "socket.io": "1.4.5"
   },
   "devDependencies": {},
   "scripts": {
