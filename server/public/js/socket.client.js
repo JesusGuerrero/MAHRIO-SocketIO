@@ -42,20 +42,20 @@ angular.module('mahrio', ['ngRoute'])
             members: room.users,
             messages: []
           };
-          console.log( 'I have joined the room: ' + room.name );
         }
         Chat.currentRoom = room.name;
         $rootScope.$broadcast('event:currentMembers' );
 
       });
       _socket.on('event:room:leave', function( obj ) {
+        console.log( 'User ' + Chat.myRooms[ obj.name ].members[ obj.user ].name  + ' has left room ' + obj.name );
         delete Chat.myRooms[ obj.name ].members[ obj.user ];
         $rootScope.$broadcast('event:currentMembers' );
       });
 
 
-      _socket.on('event:message:room', function( room ){
-        Chat.myRooms[ room.name ].messages.push( room.message );
+      _socket.on('event:message:room', function( message ){
+        Chat.myRooms[ message.room ].messages.push( message );
         $rootScope.$broadcast('event:currentMessage' );
       });
 
@@ -64,7 +64,7 @@ angular.module('mahrio', ['ngRoute'])
   .service('Chat', [ function(){
     this.myRooms = {};
     this.currentRoom = null;
-    
+
     this.users = {};
     this.rooms = {};
 
@@ -91,6 +91,9 @@ angular.module('mahrio', ['ngRoute'])
       },
       sendMessageToRoom: function( msg ) {
         _socket.emit('event:message:room', msg );
+      },
+      myId: function(){
+        return _socket.id;
       }
     };
   }])
@@ -172,7 +175,6 @@ angular.module('mahrio', ['ngRoute'])
     $scope.$on('event:currentMembers', function( ) {
       $scope.$apply( function(){
         that.currentMembers = Chat.myRooms[ Chat.currentRoom ].members;
-        console.log('go them', that.currentMembers );
       });
     });
     $scope.$on('event:currentMessage', function( ) {
@@ -192,14 +194,14 @@ angular.module('mahrio', ['ngRoute'])
       $(this).tab('show');
     });
   }])
-  .directive('chatInput',[ 'Chat', 'Socket', function( Chat, Socket ){
+  .directive('chatInput',[ 'Chat', 'Socket', '$rootScope', function( Chat, Socket, $rootScope ){
     return {
       restrict: 'E',
       replace: true,
       templateUrl: '/partials/chat-input.html',
       link: function( $scope ) {
         $scope.sendMessage = function(){
-          Chat.myRooms[ Chat.currentRoom ].messages.push( $scope.message );
+          Chat.myRooms[ Chat.currentRoom ].messages.push( {from: '/#' + Socket.myId(), message: $scope.message } );
           Socket.sendMessageToRoom( {to: Chat.currentRoom, data: $scope.message } );
           delete $scope.message;
         };

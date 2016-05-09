@@ -31,7 +31,10 @@
                     <div class="tab-content" id="chat-wrapper" style=" border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; border-left: 1px solid #ddd; ">
                         <div role="tabpanel" id="tab0" class="tab-pane active panel-body">
                             <div ng-repeat="chat in vm.chats track by $index">
-                                {{chat}}
+                                <div ng-if="!$index || ($index && vm.currentMembers[ vm.chats[ $index - 1].from ].name !== vm.currentMembers[ chat.from ].name)">
+                                    <b>{{vm.currentMembers[ chat.from ].name}}</b>
+                                </div>
+                                {{chat.message}}
                             </div>
                         </div>
                         <div role="tabpanel" id="rooms" class="tab-pane panel-body noTop">

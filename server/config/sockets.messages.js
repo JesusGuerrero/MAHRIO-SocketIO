@@ -28,7 +28,7 @@ module.exports = function( socket, rooms, users ) {
       // Send/Forward Room Message
       socket.broadcast.to( message.to ).emit( 'event:message:room', {
         from: socket.id,
-        name: message.to,
+        room: message.to,
         message: message.data
       });
 
